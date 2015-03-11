@@ -1,4 +1,5 @@
 .puph {
+  display: none;
   position: fixed;
   left: 50%;
   bottom: 5%;
@@ -7,6 +8,7 @@
   text-indent: -9999px;
   overflow: hidden;
   z-index: 10000;
+  font-size: 0;
 }
 .puph img {
   display: block;

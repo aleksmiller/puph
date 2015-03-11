@@ -1,3 +1,4 @@
+// PuphJS v0.0.1 | MIT
 function Puph() {
   var self = this;
 
@@ -22,6 +23,7 @@ function Puph() {
 
       puphImg.onload = function() {
         self.el.appendChild(puphImg);
+        self.el.style.display = 'block';
         puphImg.className = 'pulse';
       };
 
@@ -44,7 +46,8 @@ function Puph() {
   // destroy
   self.destroy = function() {
     self.el.removeChild( self.el.querySelector('img') );
-    self.el = null;
+    self.el.style.display = 'none';
+    self = null;
   };
 
   return self;
