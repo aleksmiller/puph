@@ -2,7 +2,7 @@
 Simple component for phone-call link on mobile devices
 
 ##Demo
-...
+[http://aleksmiller.github.io/puph/](http://aleksmiller.github.io/puph/)
 
 ##Usage
 * Use stylesheet `&lt;link rel="stylesheet" href="puph.css"&gt;` and JS `&lt;script src="puph.js"&gt;&lt;/script&gt;`
