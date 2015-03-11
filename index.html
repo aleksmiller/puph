@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pulse Phone</title>
+  <style>
+  a.destroy,
+  a.change_image,
+  .visible a.create {display: none;}
+  .visible a.destroy, .visible a.change_image {display: inline-block;}
+  </style>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js"></script>
+
+  <script>
+    function readyForCall(fn) {
+      if ( typeof window.jQuery === 'undefined' ) {
+        if ( document.readyState != 'loading' ) {
+          fn();
+        } else {
+          document.addEventListener('DOMContentLoaded', fn);
+        }
+      } else {
+        $(fn);
+      }
+    };
+
+    readyForCall(function() {
+      var puph;
+
+      // create new puph link
+      document.querySelector('a.create').addEventListener('click', function(e){
+        e.preventDefault();
+        document.querySelector('body').className = 'visible';
+        puph = new Puph();
+      });
+
+      // destroyer
+      document.querySelector('a.destroy').addEventListener('click', function(e){
+        e.preventDefault();
+        if ( puph ) {
+          puph.destroy();
+          document.querySelector('body').className = '';
+        } else {
+          alert('Press CREATE to create new instance of Puph() first.');
+        }
+      });
+
+      // change default icon src
+      document.querySelector('a.change_image').addEventListener('click', function(e){
+        e.preventDefault();
+        if ( puph ) {
+            puph.icon('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB3aWR0aD0iNTBweCIgaGVpZ2h0PSI1MHB4IiB2aWV3Qm94PSIwIDAgNTAgNTAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiPiAgICAgICAgPHRpdGxlPndoYXRzYXBwX2M8L3RpdGxlPiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4gICAgPGRlZnM+PC9kZWZzPiAgICA8ZyBpZD0iUGFnZS0xIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBza2V0Y2g6dHlwZT0iTVNQYWdlIj4gICAgICAgIDxwYXRoIGQ9Ik0yNSw1MCBDMzguODA3MTE5NCw1MCA1MCwzOC44MDcxMTk0IDUwLDI1IEM1MCwxMS4xOTI4ODA2IDM4LjgwNzExOTQsMCAyNSwwIEMxMS4xOTI4ODA2LDAgMCwxMS4xOTI4ODA2IDAsMjUgQzAsMzguODA3MTE5NCAxMS4xOTI4ODA2LDUwIDI1LDUwIFogTTEzLjM1MTU0ODYsMzEuMDY2NzczMiBDMTMuNTQwNzA5NiwzMS4zNjI3NTUzIDEwLjQ0NjI4OTksMzguNTIwMDIyMiAxMC42NzI3NjU0LDM4LjY5NTY2NzMgQzEwLjgwNzAxMjMsMzguNzk5NzgzNyAxOC40MjU1OTc3LDM1Ljk1MDg3NTYgMTguNTYwNDM0LDM2LjAyODAzOSBDMjAuNzUzMDIyNSwzNy4yODI4MDE2IDIzLjI5Mjc1NTgsMzggMjYsMzggQzM0LjI4NDI3MTcsMzggNDEsMzEuMjg0MjcxNyA0MSwyMyBDNDEsMTQuNzE1NzI4MyAzNC4yODQyNzE3LDggMjYsOCBDMTcuNzE1NzI4Myw4IDExLDE0LjcxNTcyODMgMTEsMjMgQzExLDI1Ljk2OTQ3NTggMTEuODYyODY3MywyOC43Mzc0MTggMTMuMzUxNTQ4NiwzMS4wNjY3NzMyIFogTTE2LjI3NjA0NTEsMzAuMDMzMTc0NiBDMTYuMzc3MzUwNSwzMC4xNzI5OTQ1IDE0LjU5NTAxNjcsMzQuNjkyNzM5IDE0LjcwMDQ3MTYsMzQuNzcxODI5NiBDMTQuNzg4MTgyMSwzNC44Mzc2MTIgMTkuMjQ1MTkxOCwzMi45MjQ3NTM1IDE5LjUxMTQ4NTgsMzMuMDk2MjQ1NyBDMjEuMzgyMjM2NSwzNC4zMDEwMDE1IDIzLjYwOTQ4ODMsMzUgMjYsMzUgQzMyLjYyNzQxNzMsMzUgMzgsMjkuNjI3NDE3MyAzOCwyMyBDMzgsMTYuMzcyNTgyNyAzMi42Mjc0MTczLDExIDI2LDExIEMxOS4zNzI1ODI3LDExIDE0LDE2LjM3MjU4MjcgMTQsMjMgQzE0LDI1LjYyNzA0NyAxNC44NDQxNzA1LDI4LjA1NjkyNzMgMTYuMjc2MDQ1MSwzMC4wMzMxNzQ2IFogTTIyLjUxMTM2MjUsMTcuMTY1Mzc1OSBDMjMuMzI4NjUzOSwxOC4zNjIxMjQzIDIzLjc2NjQ4ODgsMTkuNzM0MDA2NCAyMy43NjY0ODg4LDIwLjQwNTM1MzEgQzIzLjc2NjQ4ODcsMjEuMDc2Njk5OCAyMi42ODY0OTY1LDIyLjAzOTkzNjMgMjIuNjg2NDk2NSwyMi4wMzk5MzYzIEMyMi42ODY0OTY1LDIyLjAzOTkzNjMgMjIuODk4MzkzNCwyMy41NTc3NjM4IDI1LjAwMDAwMDIsMjUuMjUwNzI1MSBDMjcuMTAxNjA3MSwyNi45NDM2ODYyIDI4LjA1NzI2OTMsMjYuNzEwMTczOSAyOC4wNTcyNjkzLDI2LjcxMDE3MzkgQzI4LjA1NzI2OTMsMjYuNzEwMTczOSAyOS4wNzg4ODM5LDI0Ljc1NDUxMTYgMjkuODY2OTg3LDI0Ljk5OTk5OTggQzMwLjY1NTA5MDEsMjUuMjQ1NDg3OSAzMS45MTAyMTUyLDI1LjgzNDUwMzkgMzIuOTkwMjA3NSwyNi40NDc0NzMzIEMzNC4wNzAxOTk4LDI3LjA2MDQ0MjcgMzIuNzg1ODg0NywyOS43NzUwMTY1IDMxLjAzNDU0NTcsMzAuMDk2MDk1OCBDMjkuMjgzMjA2NywzMC40MTcxNzUxIDI2LjQ1MTg3NTcsMzAuMDY2OTA2NyAyMy40NDU0MTAxLDI3LjQzOTg5ODIgQzIwLjQzODk0NDQsMjQuODEyODg5OCAxOS41NzAyNDc5LDIzLjA3OTE2MTkgMTkuMTgzODE4MiwyMS40NTYxNTY4IEMxOC4xNjIyMDM4LDE3LjE2NTM3NTkgMjEuNjk0MDcxMywxNS45Njg2Mjc0IDIyLjUxMTM2MjUsMTcuMTY1Mzc1OSBaIiBpZD0id2hhdHNhcHBfYyIgZmlsbD0iIzZFRDY1QiIgc2tldGNoOnR5cGU9Ik1TU2hhcGVHcm91cCI+PC9wYXRoPiAgICA8L2c+PC9zdmc+');
+        } else {
+          alert('Press CREATE to create new instance of Puph() first.');
+        }
+      });
+    });
+  </script>
+
+  <!-- puph BEGIN -->
+  <link rel="stylesheet" href="puph.css">
+  <script src="puph.js"></script>
+  <!-- puph END -->
+
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>Pulse Phone</h1>
+      <p class="lead">Simple component for phone-call link on mobile devices.</p>
+    </div>
+    <h2>Example</h2>
+    <p>Press <strong>CREATE</strong> to create new instance of Puph().</p>
+    <a href="#" class="create btn btn-primary btn-lg">CREATE</a>
+    <a href="#" class="destroy btn btn-danger btn-lg">DESTROY</a>
+    <a href="#" class="change_image btn btn-info btn-lg">CHANGE SOURCE ICON</a>
+    <h2>Usage</h2>
+    <ol>
+      <li>
+        Use stylesheet
+        <pre><code class="language-markup">&lt;link rel="stylesheet" href="puph.css"&gt;</code></pre>
+        and JS
+        <pre><code class="language-markup">&lt;script src="puph.js"&gt;&lt;/script&gt;</code></pre>
+      </li>
+      <li>
+        Create link
+        <pre><code class="language-markup">&lt;a href="tel:380000000000" class="puph"&gt;CALL&lt;/a&gt;</code></pre>
+      </li>
+      <li>
+        Create new instance in your JS
+        <pre><code class="language-javascript">var puph = new Puph();</code></pre>
+      </li>
+    </ol>
+  </div>
+
+  <!-- puph markup -->
+  <a href="tel:380000000000" class="puph">CALL</a>
+
+</body>
+</html>
