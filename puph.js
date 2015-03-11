@@ -2,11 +2,22 @@
 function Puph() {
   var self = this;
 
+  // logger
   function _err(msg) {
     if ( typeof window.console !== 'undefined' ) {
       console.error(msg);
     }
   }
+
+  // detect mobile devices
+  var isMobile = {
+    Android: function() { return navigator.userAgent.match(/Android/i); },
+    BlackBerry: function() { return navigator.userAgent.match(/BlackBerry/i); },
+    iOS: function() { return navigator.userAgent.match(/iPhone|iPad|iPod/i); },
+    Opera: function() { return navigator.userAgent.match(/Opera Mini/i); },
+    Windows: function() { return navigator.userAgent.match(/IEMobile/i); },
+    any: function() { return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()); }
+  };
 
   // create
   self.init = function() {
@@ -15,6 +26,10 @@ function Puph() {
     if ( self.el ) {
       if ( self.el.querySelector('img') !== null ) {
         return;
+      }
+
+      if ( self.el.dataset.mobile === 'true' && !isMobile.any() ) {
+        return false;
       }
 
       var puphImg = new Image();
@@ -39,13 +54,18 @@ function Puph() {
       return;
     } else {
       var puphImg = self.el.querySelector('img');
-      puphImg.src = src;
+      if ( puphImg ) {
+        puphImg.src = src;
+      }
     }
   };
 
   // destroy
   self.destroy = function() {
-    self.el.removeChild( self.el.querySelector('img') );
+    var puphImg = self.el.querySelector('img');
+    if ( puphImg ) {
+      self.el.removeChild( puphImg );
+    }
     self.el.style.display = 'none';
     self = null;
   };
