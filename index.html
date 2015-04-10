@@ -88,8 +88,8 @@
       </li>
       <li>
         Use stylesheet and JS
-        <pre><code class="language-markup">&lt;link rel="stylesheet" href="puph.css"&gt;
-&lt;script src="puph.js"&gt;&lt;/script&gt;</code></pre>
+        <pre><code class="language-markup">&lt;link rel="stylesheet" href="/path/to/css/puph.css"&gt;
+&lt;script src="/path/to/js/puph.js"&gt;&lt;/script&gt;</code></pre>
         Make sure to use correct paths <strong>/path/to/css/</strong> and <strong>/path/to/js/</strong>.
       </li>
       <li>
@@ -103,7 +103,9 @@
         <pre><code class="language-markup">&lt;script&gt;var puph = new Puph();&lt;/script&gt;</code></pre>
         in that case it's important to init Puph script <strong>after</strong> puph.js file is used.
       </li>
-      <li>Show only on mobile devices <strong><data>&lt;a href="tel:+380000000000" class="puph" data-mobile="true"&gt;CALL&lt;/a&gt;</data></strong></li>
+      <li>Show only on mobile devices
+        <pre><code class="language-markup">&lt;a href="tel:+380000000000" class="puph" data-mobile="true"&gt;CALL&lt;/a&gt;</code></pre>
+      </li>
     </ol>
   </div>
 
